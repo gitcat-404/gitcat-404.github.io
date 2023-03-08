@@ -6,7 +6,7 @@
   <link href="http://gitcat-404.github.io/atom.xml" rel="self"/>
   
   <link href="http://gitcat-404.github.io/"/>
-  <updated>2023-03-02T12:37:42.698Z</updated>
+  <updated>2023-03-06T16:23:02.149Z</updated>
   <id>http://gitcat-404.github.io/</id>
   
   <author>
@@ -15,6 +15,19 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>my first blog</title>
+    <link href="http://gitcat-404.github.io/posts/d63b390f.html"/>
+    <id>http://gitcat-404.github.io/posts/d63b390f.html</id>
+    <published>2023-03-06T08:18:32.000Z</published>
+    <updated>2023-03-06T16:23:02.149Z</updated>
+    
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title></title>
