@@ -1,0 +1,621 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>机器学习笔记 | 启蛰海</title><meta name="author" content="whisper"><meta name="copyright" content="whisper"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="统计学习方法赫尔伯特.西蒙：”如果一个系统能够通过执行某个过程改进它的性能，这就是学习。“ 1.1 统计学习 基本概念 对象： 数据 目的： 对数据预测与分析 方法： 监督学习，无监督学习，强化学习 三要素： 模型，策略，算法  1.2 统计学习分类1.2.1监督学习：学习输入到输出的统计规律。  输入空间，输出空间，特征空间：输入与输出对成为样本 联合概率分布：假设输入X输出Y遵循联合分布概率P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习笔记">
+<meta property="og:url" content="http://wwffyy.life/posts/5a8a6c8d.html">
+<meta property="og:site_name" content="启蛰海">
+<meta property="og:description" content="统计学习方法赫尔伯特.西蒙：”如果一个系统能够通过执行某个过程改进它的性能，这就是学习。“ 1.1 统计学习 基本概念 对象： 数据 目的： 对数据预测与分析 方法： 监督学习，无监督学习，强化学习 三要素： 模型，策略，算法  1.2 统计学习分类1.2.1监督学习：学习输入到输出的统计规律。  输入空间，输出空间，特征空间：输入与输出对成为样本 联合概率分布：假设输入X输出Y遵循联合分布概率P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img1.imgtp.com/2023/03/19/J7czSApA.jpg">
+<meta property="article:published_time" content="2023-03-13T16:28:33.000Z">
+<meta property="article:modified_time" content="2023-03-21T02:43:50.548Z">
+<meta property="article:author" content="whisper">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img1.imgtp.com/2023/03/19/J7czSApA.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://wwffyy.life/posts/5a8a6c8d.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><meta name="msapplication-TileColor" content="#3b70fc"/><link rel="apple-touch-icon" sizes="180x180" href="/img/siteicon/128.png"/><link rel="icon" type="image/png" sizes="32x32" href="/img/siteicon/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/img/siteicon/16.png"/><link rel="mask-icon" href="/img/siteicon/128.png" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机器学习笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-21 10:43:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="启蛰海" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://img1.imgtp.com/2023/03/05/oLFqiGln.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://img1.imgtp.com/2023/03/19/J7czSApA.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="启蛰海"><img class="site-icon" src="https://img1.imgtp.com/2023/03/05/KlRYOa5I.png"/><span class="site-name">启蛰海</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-heart"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">机器学习笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-13T16:28:33.000Z" title="发表于 2023-03-14 00:28:33">2023-03-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-21T02:43:50.548Z" title="更新于 2023-03-21 10:43:50">2023-03-21</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="机器学习笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="统计学习方法"><a href="#统计学习方法" class="headerlink" title="统计学习方法"></a>统计学习方法</h1><p><em>赫尔伯特.西蒙：”如果一个系统能够通过执行某个过程改进它的性能，这就是学习。“</em></p>
+<h3 id="1-1-统计学习-基本概念"><a href="#1-1-统计学习-基本概念" class="headerlink" title="1.1 统计学习 基本概念"></a>1.1 统计学习 基本概念</h3><ul>
+<li>对象： 数据</li>
+<li>目的： 对数据预测与分析</li>
+<li>方法： 监督学习，无监督学习，强化学习</li>
+<li>三要素： 模型，策略，算法</li>
+</ul>
+<h3 id="1-2-统计学习分类"><a href="#1-2-统计学习分类" class="headerlink" title="1.2 统计学习分类"></a>1.2 统计学习分类</h3><h4 id="1-2-1监督学习："><a href="#1-2-1监督学习：" class="headerlink" title="1.2.1监督学习："></a>1.2.1监督学习：</h4><p>学习输入到输出的统计规律。</p>
+<ol>
+<li>输入空间，输出空间，特征空间：输入与输出对成为样本</li>
+<li>联合概率分布：假设输入X输出Y遵循联合分布概率P（X，Y），表示分布密度函数</li>
+<li>假设空间：学习范围的确定</li>
+<li>模型：用训练数据集学习一个模型，再用模型对测试样本集进行预测。由学习系统和预测系统完成。</li>
+</ol>
+<h4 id="1-2-2无监督学习："><a href="#1-2-2无监督学习：" class="headerlink" title="1.2.2无监督学习："></a>1.2.2无监督学习：</h4><p>从无标注数据中学习预测模型，学习数据中的统计规律或潜在结构。</p>
+<ol>
+<li>使用无标注数据学习或训练</li>
+<li>可以用于对已有数据的分析，也可以对未来数据预测</li>
+</ol>
+<h4 id="1-2-3强化学习"><a href="#1-2-3强化学习" class="headerlink" title="1.2.3强化学习"></a>1.2.3强化学习</h4><p>智能系统在与环境的连续互动中学习最优行为策略的机器学习问题，本质为学习最优的序贯决策</p>
+<ol>
+<li>智能系统与环境互动：在每一步t，智能系统在环境中观测到一个状态st和一个奖励rt，采取一个动作at。环境根据智能体选择的动作，决定t+1的状态与奖励。目标是长期奖励的最大化。</li>
+<li>马尔可夫决策过程</li>
+</ol>
+<h4 id="1-2-4半监督学习与主动学习"><a href="#1-2-4半监督学习与主动学习" class="headerlink" title="1.2.4半监督学习与主动学习"></a>1.2.4半监督学习与主动学习</h4><p>半监督学习，使用少量标注数据与大量未标注数据<br>主动学习，机器不断主动给出实例让教师进行标注，然后利用标注数据学习预测模型</p>
+<h3 id="1-3-按模型分类"><a href="#1-3-按模型分类" class="headerlink" title="1.3 按模型分类"></a>1.3 按模型分类</h3><ol>
+<li>概率模型与非概率模型：<ul>
+<li>概率模型：决策树，朴素贝叶斯，隐马尔可夫，条件随机场，概率潜在语义分析，潜在迪利克雷分配，高斯混合模型</li>
+<li>非概率模型：感知机，支持向量机，k近邻，adaboost，kmeans，潜在语义分析，神经网络<br>在监督学习中，概率模型是生成模型，非概率模型是判别模型<br>概率模型可用基本概率加法和乘法模型进行概率推理。</li>
+</ul>
+</li>
+<li>线性模型与非线性模型：<ul>
+<li>针对非概率模型，如果y=f（x）或z=g（x）是线性函数，则称模型为线性模型</li>
+<li>否则为非线性模型</li>
+</ul>
+</li>
+<li>参数化模型与非参数化模型：<ul>
+<li>参数化模型假设模型参数维度固定，模型可用有限维数刻画</li>
+<li>非参数化：维数不固定或无穷大，随训练数据量增大而增大</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-4按算法分类"><a href="#1-4按算法分类" class="headerlink" title="1.4按算法分类"></a>1.4按算法分类</h3><ol>
+<li>在线学习：每次接受一个样本进行预测，之后学习模型</li>
+<li>批量学习：一次接受所有数据，学习模型之后进行预测</li>
+</ol>
+<h3 id="1-5三要素"><a href="#1-5三要素" class="headerlink" title="1.5三要素"></a>1.5三要素</h3><ol>
+<li>模型：模型的假设空间包含所有可能的条件概率或决策函数</li>
+<li>策略：在假设空间中寻找最优模型<ul>
+<li>损失和风险函数：经验风险是模型关于训练样本集的平均损失记作Rexp（f）当样本容量趋于无穷时，经验风险趋于期望风险。</li>
+<li>经验风险最小化和结构风险最小化</li>
+<li>过拟合：为了减少训练误差而使得模型复杂度增加，导致测试误差增大（M次多项式拟合问题）</li>
+</ul>
+</li>
+<li>算法：模型的具体计算方法</li>
+</ol>
+<h3 id="1-6正则化与交叉验证"><a href="#1-6正则化与交叉验证" class="headerlink" title="1.6正则化与交叉验证"></a>1.6正则化与交叉验证</h3><ol>
+<li>正则化：在经验风险上加一个正则化项，模型越复杂，正则化数越大。</li>
+<li>交叉验证：给定的数据切分，组合成为训练集与测试集，反复训练</li>
+</ol>
+<h3 id="1-7泛化能力"><a href="#1-7泛化能力" class="headerlink" title="1.7泛化能力"></a>1.7泛化能力</h3><ul>
+<li>指由该方法学习到的模型对未知数据的预测能力</li>
+<li>设学到的模型为f</li>
+</ul>
+<script type="math/tex; mode=display">R_{exp}(\widehat{f})=E_{p}[L(Y,\widehat{f}(X))]=\int_{\chi * \gamma }^{}L(y,\widehat{f}(x))P(x,y)d_{x}d_{y}</script><h3 id="1-8生成模型与判别模型（在监督学习中）"><a href="#1-8生成模型与判别模型（在监督学习中）" class="headerlink" title="1.8生成模型与判别模型（在监督学习中）"></a>1.8生成模型与判别模型（在监督学习中）</h3><ol>
+<li>生成方法：由数据学习联合概率分布P（X，Y），求出P（Y|X）作为预测的模型：<script type="math/tex; mode=display">P(Y|X)=P(X,Y)/P(X)</script><ul>
+<li>因为模型表示了给定输入X产生输出Y的生成关系</li>
+<li>e.g.朴素贝叶斯，隐马尔可夫</li>
+<li>特点：可以还原出联合分布概率P（X，Y），收敛速度更快</li>
+</ul>
+</li>
+<li>判别方法：直接学习决策函数f（x）或条件概率分布P（X，Y）作为预测的模型。关心的是对给定的输入X，应预测什么样的输出Y<ul>
+<li>特点：直接面对预测，直接学习P（Y|X）或决策函数f（X），可以对数据进行各种程度上的抽象、定义特征并使用特征，可以简化学习问题。</li>
+</ul>
+</li>
+</ol>
+<h3 id="1-9-监督学习应用"><a href="#1-9-监督学习应用" class="headerlink" title="1.9 监督学习应用"></a>1.9 监督学习应用</h3><ol>
+<li>分类问题</li>
+<li>标注问题<ul>
+<li>学习一个模型，使它能够对观测序列给出标记序列作为预测（单词序列预测，词性标注）</li>
+</ul>
+</li>
+<li>回归问题<ul>
+<li>预测输入变量与输出变量之间的关系，特别是输入变量的值发生变化时，输出变量随之发生的变化。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-1感知机模型"><a href="#2-1感知机模型" class="headerlink" title="2.1感知机模型"></a>2.1感知机模型</h3><ul>
+<li>感知机是二类分类的线性分类模型，输入为特征向量输出为类别，取+1，-1.将实例划分为正负两类分离超平面属于判别模型。<script type="math/tex; mode=display">f(x)=sign(\omega x+b)</script></li>
+<li>$\omega$叫做权值向量，b叫做偏置<script type="math/tex; mode=display">sign(x)=\left\{\begin{matrix}
++1 &x\geqslant 0  \\
+-1& x<0 \\
+\end{matrix}\right.</script></li>
+<li>假设空间是特征空间中所有线性分类模型</li>
+<li>训练数据集：实例的特征向量及类别（xi，yi）</li>
+</ul>
+<h3 id="2-2感知机学习策略"><a href="#2-2感知机学习策略" class="headerlink" title="2.2感知机学习策略"></a>2.2感知机学习策略</h3><ol>
+<li>线性可分性：存在某个超平面S：$\omega x+b=0$能够将数据集的正负实例点完全正确划分到超平面的两侧，称数据集为线性可分数据集</li>
+<li>感知机学习策略：目标是求得一个能够将训练集正实例点和负实例点完全正确分开的超平面。确定$\omega$和b，使损失最小化。<ul>
+<li>损失函数：误分类点到超平面的总距离<script type="math/tex; mode=display">L(\omega ,b)=-\sum_{xi\in M}^{} y_{i}(\omega x_{i}+b)</script></li>
+</ul>
+</li>
+</ol>
+<h3 id="2-3感知机学习算法"><a href="#2-3感知机学习算法" class="headerlink" title="2.3感知机学习算法"></a>2.3感知机学习算法</h3><ul>
+<li>随机梯度下降：学习率$\eta$(步长）（0-1），</li>
+</ul>
+<ol>
+<li>任选取超平面w0，b0，</li>
+<li>选取数据（xi，yi）</li>
+<li>若<script type="math/tex">y_{i}(\omega x_{i}+b)\leqslant 0</script><script type="math/tex; mode=display">\omega<=\omega +\eta y_{i}x_{i}</script><script type="math/tex; mode=display">b<=b+\eta y_{i}</script></li>
+<li>跳回（2），直到没有误分类点</li>
+</ol>
+<h3 id="2-4感知器学习算法的对偶形式"><a href="#2-4感知器学习算法的对偶形式" class="headerlink" title="2.4感知器学习算法的对偶形式"></a>2.4感知器学习算法的对偶形式</h3><ul>
+<li>基本想法，将w和b表示为实例xi和标记yi的线性组合的形式，通过解其系数球的w和b。初始w和b为0，经过对误分类点的修改后，最后学习到的w和b可以表示为：(这里$\alpha$i=ni$\eta$)<script type="math/tex; mode=display">\omega=\sum_{i=1}^{N} \alpha _{i}x_{i}y_{i}</script><script type="math/tex; mode=display">b=\sum_{i=1}^{N} \alpha _{i}y_{i}</script></li>
+</ul>
+<ol>
+<li>a=0,b=0</li>
+<li>在训练集中选取数据（xi，yi）</li>
+<li>如果$y<em>{i}(\sum</em>{j=1}^{N}\alpha <em>{j}y</em>{j}x<em>{j}\cdot x</em>{i}+b)\leqslant 0$ :<script type="math/tex; mode=display">\alpha_{i}<=\alpha _{i}+\eta</script><script type="math/tex; mode=display">b<=b+\eta y_{i}</script></li>
+<li>转到2直到没有误分类数据</li>
+</ol>
+<h3 id="3-1k近邻算法"><a href="#3-1k近邻算法" class="headerlink" title="3.1k近邻算法"></a>3.1k近邻算法</h3><ul>
+<li>给定一个训练数据集，对于新的训练实例，在训练数据集中找到与该实例最邻近的k个实例，这k个实例多数属于某个类，就把该输入实例分为这个类。</li>
+</ul>
+<h3 id="3-2k近邻模型"><a href="#3-2k近邻模型" class="headerlink" title="3.2k近邻模型"></a>3.2k近邻模型</h3><ol>
+<li>模型：根据训练集，距离度量，k值，以及决策规则，将特征空间划分为一些子空间。</li>
+<li>距离度量：点xi与xj的Lp距离：<script type="math/tex; mode=display">L_{p}(x_{i},x_{j})=(\sum_{l=1}^{n}\left|x_{i}^{(l)}- x_{j}^{(l)}\right|^{p})^{\frac{1}{p}}</script><ul>
+<li>p=2,欧氏距离</li>
+</ul>
+</li>
+</ol>
+<script type="math/tex; mode=display">L_{2}(x_{i},x_{j})=(\sum_{l=1}^{n}\left|x_{i}^{(l)}- x_{j}^{(l)}\right|^{2})^{\frac{1}{2}}</script><ul>
+<li>p=1,曼哈顿距离<script type="math/tex; mode=display">L_{1}(x_{i},x_{j})=\sum_{l=1}^{n}\left|x_{i}^{(l)}- x_{j}^{(l)}\right|</script></li>
+<li>p=无穷<script type="math/tex; mode=display">L_{\infty }(x_{i},x_{j})=max\left|x_{i}^{(l)}- x_{j}^{(l)}\right|</script></li>
+<li>不同距离度量确定的最近邻点是不同的</li>
+</ul>
+<h4 id="k值的选择"><a href="#k值的选择" class="headerlink" title="k值的选择"></a>k值的选择</h4><ul>
+<li>k比较小，模型复杂容易过拟合</li>
+<li>k大，学习误差小，模型简单</li>
+</ul>
+<h3 id="3-3k近邻的实现：kd树（未理解）"><a href="#3-3k近邻的实现：kd树（未理解）" class="headerlink" title="3.3k近邻的实现：kd树（未理解）"></a>3.3k近邻的实现：kd树（未理解）</h3><ul>
+<li>kd树的构造：<ol>
+<li>开始，构造根节点，由根节点生成深度为1的左右子节点。。。将落在切分超平面上的实例点保存在根节点</li>
+<li>重复：对深度为j的结点选择x(l)为切分的坐标轴，l=j(mod k)+1,以该节点对应的区域中所有实例x(l)坐标的中位数为切分点。切分通过切分点并与坐标轴x(l)垂直的超平面实现。将落在切分超平面上的实例点保存在该节点。</li>
+<li>直到两个子区域没有实例时停止。</li>
+</ol>
+</li>
+<li>kd树搜索：<h3 id="4-1朴素贝叶斯"><a href="#4-1朴素贝叶斯" class="headerlink" title="4.1朴素贝叶斯"></a>4.1朴素贝叶斯</h3></li>
+</ul>
+<ol>
+<li>基本方法：x为N维向量，y为类标记（class label），P（X，Y）为x和y的联合概率分布，训练数据集<script type="math/tex">T=\begin{Bmatrix}
+(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})
+\end{Bmatrix}</script><br>由P（X，Y）独立同分布产生。<ul>
+<li>通过训练数据集学习联合分布概率P（X，Y）。先学习先验概率分布及条件概率分布：<script type="math/tex">P(Y=c_{k}),k=1,2,...,K</script></li>
+<li>由于条件概率分布P（X=x，Y=ck）有指数量级的参数，不宜计算。朴素贝叶斯对条件概率分布作了条件独立性的假设：<script type="math/tex; mode=display">P(X=x|Y=c_{k})=P(X^{(1)}=x^{(1)},...,X^{(n)}=x^{(n)}|Y=c_{k})</script><script type="math/tex; mode=display">=\prod_{j=1}^{n}P(X^{(j)}  =x^{(j)}|Y=c_{k})</script></li>
+<li>由学习到生成数据的机制，属于生成模型。条件独立假设等于说用于分类的特征在类确定条件下都是条件独立的。这一假设使朴素贝叶斯变得简单，有时牺牲准确率。</li>
+<li>后验概率计算根据贝叶斯定理：<script type="math/tex; mode=display">P(Y=c_{k}|X=x)=\frac{P(X=x|Y=c_{k})P(Y=c_{k})}{\sum_{k}^{}P(X=x|Y=c_{k})P(Y=c_{k})}</script>将以上假设带入得到朴素贝叶斯分类基本公式：<script type="math/tex; mode=display">P(Y=c_{k}|X=x)=\frac{P(X=x|Y=c_{k})\prod_{j=1}^{n}P(X^{(j)}  =x^{(j)}|Y=c_{k})}{\sum_{k}^{}\prod_{j=1}^{n}P(X^{(j)}  =x^{(j)}|Y=c_{k})P(Y=c_{k})}</script></li>
+<li>朴素贝叶斯分类器可表示为<script type="math/tex; mode=display">y=f(x)=argmaxP(Y=c_{k}|X=x)</script><script type="math/tex; mode=display">=\prod_{j=1}^{n}P(X^{(j)}  =x^{(j)}|Y=c_{k})</script>2.后验概率最大化的含义：为了使期望风险函数（条件期望）最小化，推导出后验概率最大化。<h3 id="4-2朴素贝叶斯的参数估计"><a href="#4-2朴素贝叶斯的参数估计" class="headerlink" title="4.2朴素贝叶斯的参数估计"></a>4.2朴素贝叶斯的参数估计</h3></li>
+</ul>
+</li>
+<li>极大似然估计：<br><em>极大似然估计，通俗理解来说，就是利用已知的样本结果信息，反推最具有可能（最大概率）导致这些样本结果出现的模型参数值！换句话说，极大似然估计提供了一种给定观察数据来评估模型参数的方法，即：“模型已定，参数未知”。</em></li>
+<li>朴素贝叶斯算法：<ol>
+<li>计算先验概率及条件概率<script type="math/tex; mode=display">P(Y=c_{k})=\frac{\sum_{i=1}^{N}I(y_{i}=c_{k})}{N},k=1,2,...K</script><script type="math/tex; mode=display">P(X^{(j)}=a_{jl}|Y=c_{k})=\frac{\sum_{i=1}^{N}I(x_{i}^{(j)}=a_{jl},y_{i}=c_{k})}{\sum_{i=1}^{N}I(y_{i}=c_{k})}</script>j=1,2,…n;l=1,2,…Sj;k=1,2…K</li>
+<li>对于给定的实例<script type="math/tex">x=(x^{(1)},x^{(2)},...x^{(n)})</script><script type="math/tex; mode=display">P(Y=c_{k})\prod_{j=1}^{n}P(X^{(j)}=x^{(j)}|Y=c_{k})</script></li>
+<li>通过计算上式在$P(Y=c_{k})$为何值时取得最大，得出实例x的类。</li>
+</ol>
+</li>
+<li>贝叶斯估计：用极大似然估计可能会出现所求概率值为0的情况。会影响后验概率的计算结果，使分类产生偏差。<script type="math/tex">P(X^{(j)}=a_{jl}|Y=c_{k})=\frac{\sum_{i=1}^{N}I(x_{i}^{(j)}=a_{jl},y_{i}=c_{k})+\lambda }{\sum_{i=1}^{N}I(y_{i}=c_{k})+\lambda S_{j}}</script>在随机变量各个取值的频数上赋予一个正数$\lambda$,常取1.成为拉普拉斯平滑。Sj为x所有可能总数量。同样，先验概率的贝叶斯估计是：<script type="math/tex">P(Y=c_{k})=\frac{\sum_{i=1}^{N}I(y_{i}=c_{k})+\lambda }{N+K\lambda },k=1,2,...K</script>K为所有y可能取值的总数量<h3 id="5支持向量机"><a href="#5支持向量机" class="headerlink" title="5支持向量机"></a>5支持向量机</h3><em>支持向量机是一种二类分类模型。它的基本模型是定义在特征空间上的间隔最大的线性分类器，间隔最大使它有别于感知机。支持向量机的学习策略是间隔最大化，可形式化为一个求解凸二次规划的问题，等价于正则化的合页损失函数的最小化问题。</em><h3 id="5-1线性可分支持向量机与硬间隔最大化"><a href="#5-1线性可分支持向量机与硬间隔最大化" class="headerlink" title="5.1线性可分支持向量机与硬间隔最大化"></a>5.1线性可分支持向量机与硬间隔最大化</h3></li>
+<li>假设输入空间与特征空间为两个不同的空间。线性可分支持向量机假设这两个空间的元素一一对应，将输入空间中的输入映射为特征空间中的特征向量。假定给定一个特征空间上的训练数据集：<script type="math/tex">T=\begin{Bmatrix}
+(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})
+\end{Bmatrix}</script><br>其中：<script type="math/tex">x_{i}\in \chi =R^{n},y_{i}\in \gamma =\begin{Bmatrix}
++1,-1\end{Bmatrix},i=1,2,...N</script><br>yi=1,称xi为正例；yi=-1，称xi为负例。假设训练数据是线性可分的，学习的目标是在特征空间中找到一个分离超平面，能将实例分到不同的类。分离超平面对应方程wx+b=0，由法向量w和截距决定。法向量指向的一侧为正类，一侧为负类。<br>当训练数据集线性可分时，由于存在无穷个分离超平面。感知机利用误分类最小的策略，，解有无穷多个；线性可分支持向量机利用间隔最大化求解最优分离超平面，这时，解是唯一的。<br>超平面：<script type="math/tex">\omega^{*} x+b^{*}=0</script><br>相应的分类决策函数：<script type="math/tex; mode=display">f(x)=sign(\omega^{*} x+b^{*})</script></li>
+<li>函数间隔和几何间隔<br>一般来说，一个点距离超平面的远近可以表示分类预测的确信程度。在超平面$\omega x+b=0$<br>确定的情况下，用$\left| \omega x+b\right|$来相对表示x距离超平面的远近。$\omega x+b=0$的符号与标记y的符号是否一致来表示分类是否正确。<br>对于某一样本点的函数间隔：<script type="math/tex; mode=display">\widehat{\gamma _{i}}=y_{i}(\omega x_{i}+b)</script></li>
+</ol>
+<p>定义：超平面 （w，b）关于训练集T的函数间隔为超平面（w，b）关于T中所有样本点（xi，yi）的函数间隔的最小值：</p>
+<script type="math/tex; mode=display">\widehat{\gamma }=min\widehat{\gamma _{i}}</script><p>函数间隔可以表示分类预测的正确性和确信度。但如果等比例改变w和b，超平面没有改变，但是函数间隔变化。因此，我们要对分离超平面的法向量w加以约束，如规范化||w||=1，使得间隔是确定的，这时间隔为几何间隔：</p>
+<script type="math/tex; mode=display">\widehat{\gamma _{i}}=y_{i}(\frac{\omega}{\begin{Vmatrix}
+\omega \end{Vmatrix}} x_{i}+\frac{b}{\begin{Vmatrix}
+\omega \end{Vmatrix}})</script><p>同理，定义超平面（w，b）关于训练数据集T的几何间隔为各样本几何间隔最小值。</p>
+<script type="math/tex; mode=display">\widehat{\gamma }=min\widehat{\gamma _{i}}</script><ol>
+<li>硬间隔最大化：<ul>
+<li>最大间隔分离超平面：<script type="math/tex; mode=display">\underset{\omega ,b}{min} \frac{1}{2}\begin{Vmatrix}
+\omega \end{Vmatrix}^{2}</script><script type="math/tex; mode=display">s.t.\ \  y_{i}(\omega x_{i}+b)-1\geqslant 0,i=1,2,...N</script>凸二次规划问题</li>
+</ul>
+<ol>
+<li>支持向量与间隔边界：在线性可分发情况下，训练样本数据集中的样本点中与分离超平面距离最近的样本点的实例成为支持向量.支持向量是使下式成立的点。<script type="math/tex">y_{i}(\omega x_{i}+b)-1= 0</script>对yi=+1的正例点，支持向量在超平面<script type="math/tex">H1:\omega x+b=1</script>对于yi=-1的负例点，支持向量在超平面<script type="math/tex">H2:\omega x+b=-1</script>在H1和H2上的点就是支持向量。<h3 id="5-2软间隔最大化"><a href="#5-2软间隔最大化" class="headerlink" title="5.2软间隔最大化"></a>5.2软间隔最大化</h3></li>
+</ol>
+</li>
+</ol>
+<h3 id="6神经网络"><a href="#6神经网络" class="headerlink" title="6神经网络"></a>6神经网络</h3><ul>
+<li>简介（以下由chatgpt生成）<br>神经网络算法是一类基于生物神经系统思维方式和人工智能技术的计算模型，被广泛应用于机器学习、图像识别、自然语言处理、语音识别、控制系统等领域。常用的神经网络算法包括以下几种：</li>
+</ul>
+<ol>
+<li><p>前馈神经网络（Feedforward Neural Networks）：是最基本、最常用的神经网络算法，其特点是信息传递是单向的，不具有反馈和循环。可以通过调节网络的层数、神经元数量和权重等参数进行训练和优化。</p>
+</li>
+<li><p>卷积神经网络（Convolutional Neural Networks）：主要用于图像识别和计算机视觉等领域，其结构由多层卷积层、池化层和全连接层构成，可以有效地提取图像特征。</p>
+</li>
+<li><p>循环神经网络（Recurrent Neural Networks）：具有时间依赖性，可以处理序列数据、自然语言处理、语音识别等任务。其具有循环结构，可以记住过去的状态信息，并且通过反馈机制将当前状态与前面的状态相连。</p>
+</li>
+<li><p>长短期记忆网络（Long Short-Term Memory Networks）：是一种特殊的循环神经网络，能够有效地解决长时间依赖问题，主要应用于自然语言处理、语音识别、机器翻译等领域。</p>
+</li>
+<li><p>自编码器（Autoencoders）：是一种无监督学习方法，可以用于数据压缩、特征提取、图像去噪等任务，其原理是通过学习数据的低维表示来重构输入数据。</p>
+</li>
+</ol>
+<p>神经网络算法的优点是能够进行大规模并行计算、处理非线性问题、具有自适应性和学习能力等，但也存在训练难度大、容易陷入局部最优解等问题。<br>当人们谈论神经网络时，通常指的是深度神经网络（Deep Neural Networks，DNNs），它们是一种人工神经网络（Artificial Neural Networks，ANNs）的变种。在深度学习中，神经网络是最流行的算法之一，用于解决各种任务，包括图像识别、自然语言处理和语音识别。</p>
+<p>神经网络算法的基本原理是通过学习数据的规律来构建一个函数，将输入映射到输出。这个函数由神经网络的各个层组成，每个层都由多个神经元（或称为节点）组成。每个神经元接收到来自前一层的输入，并通过一些权重和偏置来计算输出。</p>
+<p>神经网络的训练过程通常使用反向传播算法（Backpropagation）来优化神经元的权重和偏置。这个算法通过计算损失函数的梯度来更新神经元的权重和偏置，以使模型的预测更加准确。损失函数通常是一个衡量模型预测值与真实值之间差距的函数。</p>
+<p>底层逻辑方面，神经网络是一种前馈网络，即数据从输入层开始流向输出层，中间没有反馈或循环。神经网络中每个神经元的输出是通过对它们的输入进行一系列数学运算来计算得出的。这些运算通常包括对输入进行加权求和，然后使用激活函数来转换成神经元的输出。</p>
+<p>在深度神经网络中，通常有多个隐藏层，每个隐藏层都有多个神经元。每个隐藏层可以看作是对输入的一种抽象表示，它将输入中的一些特征提取出来并传递给下一层，最终得到输出。通过增加隐藏层和神经元的数量，神经网络可以学习更加复杂的模式和规律。</p>
+<h3 id="7最速下降法"><a href="#7最速下降法" class="headerlink" title="7最速下降法"></a>7最速下降法</h3><p>输入：目标函数f（x），梯度函数<script type="math/tex">g(x)=\triangledown f(x)</script>,精度$\varepsilon$.<br>输出：f（x）的极小值点x*</p>
+<ol>
+<li>取初始值$x^{(0)}$,置k=0</li>
+<li>计算$f(x^{(k)})$</li>
+<li>计算梯度$g<em>{k}=g(x^{(k)})$,当$\begin{Vmatrix}g</em>{k}\end{Vmatrix}&lt;\varepsilon$时停止迭代，令x^{*}=x^{(k)}，否则令$p<em>{k}=-g(x^{(k)})$,求$\lambda</em>{k}$,,使：<script type="math/tex; mode=display">f(x^{(k)}+\lambda _{k}p_{k})=\underset{\lambda \geqslant 0}{min}f(x^{(k)}+\lambda p_{k})</script><ol>
+<li>置$x^{(k+1)}=x^{(k)}+\lambda <em>{k}p</em>{k}$,计算$f(x^{(k+1)})$<br>当$\begin{Vmatrix}f(x^{(k+1)}-f(x)^{(k)})\end{Vmatrix}&lt;\varepsilon$或：$\begin{Vmatrix}x^{(k+1)}-x^{(k)}\end{Vmatrix}&lt;\varepsilon$时，停止迭代，令$x^{*}=x^{(k+1)}$</li>
+<li>否则，令k=k+1，转到3.<br>计算量小，存储量小，必收敛<br>局部最优，收敛速度慢，大多数条件下线性收敛<h3 id="8牛顿法"><a href="#8牛顿法" class="headerlink" title="8牛顿法"></a>8牛顿法</h3></li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>优点：收敛速度快，大多数情况下超线性收敛</li>
+<li>缺点：二阶梯度正定时才下降，计算量大，当牛顿法无法产生下降方向时，用最速下降法代替</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://wwffyy.life">whisper</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://wwffyy.life/posts/5a8a6c8d.html">http://wwffyy.life/posts/5a8a6c8d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://wwffyy.life" target="_blank">启蛰海</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://img1.imgtp.com/2023/03/19/J7czSApA.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/376cf89b.html" title="线性代数知识点（遗忘则补充）"><img class="cover" src="https://img1.imgtp.com/2023/03/19/3jDc5L1G.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">线性代数知识点（遗忘则补充）</div></div></a></div><div class="next-post pull-right"><a href="/posts/d63b390f.html" title="一份（不太）简短的个人简介（完善中）"><img class="cover" src="https://img1.imgtp.com/2023/02/07/TuYri4GJ.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">一份（不太）简短的个人简介（完善中）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://img1.imgtp.com/2023/03/05/oLFqiGln.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">whisper</div><div class="author-info__description">like : 摄影、篮球、钢琴</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/gitcat-404"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">努力成为技术大佬</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">统计学习方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.1 统计学习 基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.2 统计学习分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">1.2.1监督学习：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">1.2.2无监督学习：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">1.2.3强化学习</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">1.2.4半监督学习与主动学习</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%8C%89%E6%A8%A1%E5%9E%8B%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">1.3 按模型分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4%E6%8C%89%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB"><span class="toc-number">1.0.4.</span> <span class="toc-text">1.4按算法分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">1.0.5.</span> <span class="toc-text">1.5三要素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6%E6%AD%A3%E5%88%99%E5%8C%96%E4%B8%8E%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="toc-number">1.0.6.</span> <span class="toc-text">1.6正则化与交叉验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7%E6%B3%9B%E5%8C%96%E8%83%BD%E5%8A%9B"><span class="toc-number">1.0.7.</span> <span class="toc-text">1.7泛化能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%9C%A8%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E4%B8%AD%EF%BC%89"><span class="toc-number">1.0.8.</span> <span class="toc-text">1.8生成模型与判别模型（在监督学习中）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8"><span class="toc-number">1.0.9.</span> <span class="toc-text">1.9 监督学习应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E6%84%9F%E7%9F%A5%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.0.10.</span> <span class="toc-text">2.1感知机模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E6%84%9F%E7%9F%A5%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AD%96%E7%95%A5"><span class="toc-number">1.0.11.</span> <span class="toc-text">2.2感知机学习策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E6%84%9F%E7%9F%A5%E6%9C%BA%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95"><span class="toc-number">1.0.12.</span> <span class="toc-text">2.3感知机学习算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4%E6%84%9F%E7%9F%A5%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%9A%84%E5%AF%B9%E5%81%B6%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.0.13.</span> <span class="toc-text">2.4感知器学习算法的对偶形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1k%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95"><span class="toc-number">1.0.14.</span> <span class="toc-text">3.1k近邻算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2k%E8%BF%91%E9%82%BB%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.0.15.</span> <span class="toc-text">3.2k近邻模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#k%E5%80%BC%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.0.15.1.</span> <span class="toc-text">k值的选择</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3k%E8%BF%91%E9%82%BB%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%9Akd%E6%A0%91%EF%BC%88%E6%9C%AA%E7%90%86%E8%A7%A3%EF%BC%89"><span class="toc-number">1.0.16.</span> <span class="toc-text">3.3k近邻的实现：kd树（未理解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">1.0.17.</span> <span class="toc-text">4.1朴素贝叶斯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.0.18.</span> <span class="toc-text">4.2朴素贝叶斯的参数估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="toc-number">1.0.19.</span> <span class="toc-text">5支持向量机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1%E7%BA%BF%E6%80%A7%E5%8F%AF%E5%88%86%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E4%B8%8E%E7%A1%AC%E9%97%B4%E9%9A%94%E6%9C%80%E5%A4%A7%E5%8C%96"><span class="toc-number">1.0.20.</span> <span class="toc-text">5.1线性可分支持向量机与硬间隔最大化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2%E8%BD%AF%E9%97%B4%E9%9A%94%E6%9C%80%E5%A4%A7%E5%8C%96"><span class="toc-number">1.0.21.</span> <span class="toc-text">5.2软间隔最大化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.0.22.</span> <span class="toc-text">6神经网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E6%9C%80%E9%80%9F%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="toc-number">1.0.23.</span> <span class="toc-text">7最速下降法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E7%89%9B%E9%A1%BF%E6%B3%95"><span class="toc-number">1.0.24.</span> <span class="toc-text">8牛顿法</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/376cf89b.html" title="线性代数知识点（遗忘则补充）"><img src="https://img1.imgtp.com/2023/03/19/3jDc5L1G.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="线性代数知识点（遗忘则补充）"/></a><div class="content"><a class="title" href="/posts/376cf89b.html" title="线性代数知识点（遗忘则补充）">线性代数知识点（遗忘则补充）</a><time datetime="2023-03-18T14:50:20.000Z" title="发表于 2023-03-18 22:50:20">2023-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/5a8a6c8d.html" title="机器学习笔记"><img src="https://img1.imgtp.com/2023/03/19/J7czSApA.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="机器学习笔记"/></a><div class="content"><a class="title" href="/posts/5a8a6c8d.html" title="机器学习笔记">机器学习笔记</a><time datetime="2023-03-13T16:28:33.000Z" title="发表于 2023-03-14 00:28:33">2023-03-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/d63b390f.html" title="一份（不太）简短的个人简介（完善中）"><img src="https://img1.imgtp.com/2023/02/07/TuYri4GJ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="一份（不太）简短的个人简介（完善中）"/></a><div class="content"><a class="title" href="/posts/d63b390f.html" title="一份（不太）简短的个人简介（完善中）">一份（不太）简短的个人简介（完善中）</a><time datetime="2023-03-06T08:18:32.000Z" title="发表于 2023-03-06 16:18:32">2023-03-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4a17b156.html" title="Hello World"><img src="https://img1.imgtp.com/2023/03/08/mntl9pF4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/4a17b156.html" title="Hello World">Hello World</a><time datetime="2023-03-01T01:21:09.565Z" title="发表于 2023-03-01 09:21:09">2023-03-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By whisper</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><div class="aplayer no-destroy" data-id="7696294679" data-server="tencent" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div class="app-refresh" id="app-refresh" style="position: fixed;top: -2.2rem;left: 0;right: 0;z-index: 99999;padding: 0 1rem;font-size: 15px;height: 2.2rem;transition: all 0.3s ease;"><div class="app-refresh-wrap" style=" display: flex;color: #fff;height: 100%;align-items: center;justify-content: center;"><label>✨ 有新文章啦！ 👉</label><a href="javascript:void(0)" onclick="location.reload()"><span style="color: #fff;text-decoration: underline;cursor: pointer;">🍗点击食用🍔</span></a></div></div><script>if ('serviceWorker' in navigator) {
+if (navigator.serviceWorker.controller) {
+navigator.serviceWorker.addEventListener('controllerchange', function() {
+showNotification()
+})
+}
+window.addEventListener('load', function() {
+navigator.serviceWorker.register('/sw.js')
+})
+}
+function showNotification() {
+if (GLOBAL_CONFIG.Snackbar) {
+var snackbarBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+GLOBAL_CONFIG.Snackbar.bgLight :
+GLOBAL_CONFIG.Snackbar.bgDark
+var snackbarPos = GLOBAL_CONFIG.Snackbar.position
+Snackbar.show({
+text: '✨ 有新文章啦！ 👉',
+backgroundColor: snackbarBg,
+duration: 500000,
+pos: snackbarPos,
+actionText: '🍗点击食用🍔',
+actionTextColor: '#fff',
+onActionClick: function(e) {
+location.reload()
+},
+})
+} else {
+var showBg =
+document.documentElement.getAttribute('data-theme') === 'light' ?
+'#3b70fc' :
+'#1f1f1f'
+var cssText = `top: 0; background: ${showBg};`
+document.getElementById('app-refresh').style.cssText = cssText
+}
+}</script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '4f60bb7b1e494d6090b14273201dbe54';
+  var gaud_map_key = 'ca9deefeece92d0ae985ba0e1a1bbc80';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script async src="/sourse/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
